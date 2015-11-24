@@ -36,6 +36,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private List<Integer> list;
     private int modeFlag = THREE;
     private TextView nowModeTv;
+    private Button stopBtn;
+    private Boolean loopFlag =false;
 
     private void assignViews() {
         mStart = (Button) findViewById(R.id.start);
@@ -43,6 +45,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mSet = (Button) findViewById(R.id.set);
         mTiShiTv = (TextView) findViewById(R.id.tishiTv);
         nowModeTv = (TextView) findViewById(R.id.now_mode);
+        stopBtn = (Button) findViewById(R.id.stop);
     }
 
     @Override
@@ -63,6 +66,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         assignViews();
         mStart.setOnClickListener(this);
         mSet.setOnClickListener(this);
+        stopBtn.setOnClickListener(this);
         random = new Random();
         nowModeTv.setText("CDE");
     }
@@ -116,6 +120,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(final View v) {
         switch (v.getId()){
             case R.id.start:
+                loopFlag = true;
                 v.setEnabled(false);
                 mTiShiTv.setText("");
                 new Thread(){
@@ -123,7 +128,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     public void run() {
                         super.run();
                         list = new ArrayList<>();
-                        for(int i=0 ;i < mCount;i++){
+                        for(int i=0 ;i < mCount&&loopFlag;i++){
                             mediaPlayer = MediaPlayer.create(MainActivity.this,getRandomRawId());
                             mediaPlayer.start();
                             try {
@@ -154,6 +159,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.set:
                 mCount = Integer.parseInt(mNumEt.getText().toString());
                 Toast.makeText(this,"set ok",Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.stop:
+                loopFlag = false;
+                break;
 
         }
     }

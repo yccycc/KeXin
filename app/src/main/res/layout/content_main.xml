@@ -13,11 +13,17 @@
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:text="@string/play"/>
+    <Button
+        android:id="@+id/stop"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_below="@+id/start"
+        android:text="@string/stop" />
     <EditText
         android:id="@+id/numEt"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_below="@+id/start"
+        android:layout_below="@+id/stop"
         android:numeric="integer"
         android:text="5"
         android:textAlignment="center"/>
