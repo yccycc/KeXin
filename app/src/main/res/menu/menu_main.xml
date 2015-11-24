@@ -11,4 +11,10 @@
         android:orderInCategory="100" app:showAsAction="never" />
     <item android:id="@+id/cdefgab" android:title="cdefgab"
         android:orderInCategory="100" app:showAsAction="never" />
+    <item android:id="@+id/de" android:title="de"
+        android:orderInCategory="100" app:showAsAction="never" />
+    <item android:id="@+id/ef" android:title="ef"
+        android:orderInCategory="100" app:showAsAction="never" />
+    <item android:id="@+id/def" android:title="def"
+        android:orderInCategory="100" app:showAsAction="never" />
 </menu>

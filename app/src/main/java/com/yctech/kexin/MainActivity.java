@@ -26,6 +26,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private static final int FIVE = 5;
     private static final int SIX = 6;
     private static final int SEVEN = 7;
+    private static final int EIGHT = 8;
+    private static final int NINE = 9;
+    private static final int TEN = 10;
     private Button mStart;
     private EditText mNumEt;
     private Button mSet;
@@ -113,6 +116,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if(0.7<=temp&&temp<0.84){list.add(6);return R.raw.a;}
             if(0.84<=temp&&temp<1){list.add(7);return R.raw.b;}
         }
+
+        if(EIGHT==modeFlag){
+            float temp =random.nextFloat();
+            if(0<=temp&&temp<0.5){list.add(2);return R.raw.d;}
+            if(0.5<=temp&&temp<1){list.add(3);return R.raw.e;}
+        }
+        if(NINE==modeFlag){
+            float temp =random.nextFloat();
+            if(0<=temp&&temp<0.5){list.add(3);return R.raw.e;}
+            if(0.5<=temp&&temp<1){list.add(4);return R.raw.f;}
+        }
+        if(TEN==modeFlag){
+            float temp =random.nextFloat();
+            if(0<=temp&&temp<0.33){list.add(2);return R.raw.d;}
+            if(0.33<=temp&&temp<0.66){list.add(3);return R.raw.e;}
+            if(0.66<=temp&&temp<1){list.add(4);return R.raw.f;}
+        }
         return R.raw.c;
     }
 
@@ -199,6 +219,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Toast.makeText(this,"cdefgab",Toast.LENGTH_SHORT).show();
                 modeFlag = SEVEN;
                 nowModeTv.setText("CDEFGAB");
+                break;
+            case R.id.de:
+                Toast.makeText(this,"de",Toast.LENGTH_SHORT).show();
+                modeFlag = EIGHT;
+                nowModeTv.setText("DE");
+                break;
+            case R.id.ef:
+                Toast.makeText(this,"ef",Toast.LENGTH_SHORT).show();
+                modeFlag = NINE;
+                nowModeTv.setText("EF");
+                break;
+            case R.id.def:
+                Toast.makeText(this,"def",Toast.LENGTH_SHORT).show();
+                modeFlag = TEN;
+                nowModeTv.setText("DEF");
                 break;
         }
 
