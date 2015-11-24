@@ -21,6 +21,11 @@ import java.util.List;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+    private static final int THREE = 3;
+    private static final int FOUR = 4;
+    private static final int FIVE = 5;
+    private static final int SIX = 6;
+    private static final int SEVEN = 7;
     private Button mStart;
     private EditText mNumEt;
     private Button mSet;
@@ -29,18 +34,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private MediaPlayer mediaPlayer;
     private Random random;
     private List<Integer> list;
-    private static final int THREE = 3;
-    private static final int FOUR = 4;
-    private static final int FIVE = 5;
-    private static final int SIX = 6;
-    private static final int SEVEN = 7;
     private int modeFlag = THREE;
+    private TextView nowModeTv;
 
     private void assignViews() {
         mStart = (Button) findViewById(R.id.start);
         mNumEt = (EditText) findViewById(R.id.numEt);
         mSet = (Button) findViewById(R.id.set);
         mTiShiTv = (TextView) findViewById(R.id.tishiTv);
+        nowModeTv = (TextView) findViewById(R.id.now_mode);
     }
 
     @Override
@@ -62,6 +64,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mStart.setOnClickListener(this);
         mSet.setOnClickListener(this);
         random = new Random();
+        nowModeTv.setText("CDE");
     }
 
     private int getRandomRawId(){
@@ -166,22 +169,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.cde:
                 Toast.makeText(this,"cde",Toast.LENGTH_SHORT).show();
                 modeFlag = THREE;
+                nowModeTv.setText("CDE");
                 break;
             case R.id.cdef:
                 Toast.makeText(this,"cdef",Toast.LENGTH_SHORT).show();
                 modeFlag = FOUR;
+                nowModeTv.setText("CDEF");
                 break;
             case R.id.cdefg:
                 Toast.makeText(this,"cdefg",Toast.LENGTH_SHORT).show();
                 modeFlag = FIVE;
+                nowModeTv.setText("CDEFG");
                 break;
             case R.id.cdefga:
                 Toast.makeText(this,"cdefga",Toast.LENGTH_SHORT).show();
                 modeFlag = SIX;
+                nowModeTv.setText("CDEFGA");
                 break;
             case R.id.cdefgab:
                 Toast.makeText(this,"cdefgab",Toast.LENGTH_SHORT).show();
                 modeFlag = SEVEN;
+                nowModeTv.setText("CDEFGAB");
                 break;
         }
 
