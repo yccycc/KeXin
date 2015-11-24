@@ -119,7 +119,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     @Override
                     public void run() {
                         super.run();
-                        list = new ArrayList<Integer>();
+                        list = new ArrayList<>();
                         for(int i=0 ;i < mCount;i++){
                             mediaPlayer = MediaPlayer.create(MainActivity.this,getRandomRawId());
                             mediaPlayer.start();
@@ -136,7 +136,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         v.post(new Runnable() {
                             @Override
                             public void run() {
-                                //mTiShiTv.setText(Integer.parseInt(mNumEt.getText().toString()));
                                 mTiShiTv.setText(Arrays.toString(list.toArray()));
                             }
                         });
@@ -157,22 +156,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-//        int id = item.getItemId();
-//
-//        //noinspection SimplifiableIfStatement
-//        if (id == R.id.action_settings) {
-//            return true;
-//        }
         switch (item.getItemId()){
             case R.id.cde:
                 Toast.makeText(this,"cde",Toast.LENGTH_SHORT).show();
