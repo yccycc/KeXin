@@ -39,6 +39,12 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/set"
         android:textAlignment="center" />
+    <Button
+        android:id="@+id/loop"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_below="@+id/now_mode"
+        android:text="循环" />
     <TextView
         android:id="@+id/tishiTv"
         android:layout_width="match_parent"

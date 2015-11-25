@@ -6,7 +6,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -41,6 +40,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView nowModeTv;
     private Button stopBtn;
     private Boolean loopFlag =false;
+    private Button loop;
 
     private void assignViews() {
         mStart = (Button) findViewById(R.id.start);
@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mTiShiTv = (TextView) findViewById(R.id.tishiTv);
         nowModeTv = (TextView) findViewById(R.id.now_mode);
         stopBtn = (Button) findViewById(R.id.stop);
+        loop = (Button) findViewById(R.id.loop);
     }
 
     @Override
@@ -70,27 +71,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mStart.setOnClickListener(this);
         mSet.setOnClickListener(this);
         stopBtn.setOnClickListener(this);
+        loop.setOnClickListener(this);
         random = new Random();
         nowModeTv.setText("CDE");
     }
 
     private int getRandomRawId(){
-        Log.i("fffff",modeFlag+"");
+        float temp =random.nextFloat();
         if(THREE==modeFlag){
-            float temp =random.nextFloat();
             if(0<=temp&&temp<0.33){list.add(1);return R.raw.c;}
             if(0.33<=temp&&temp<0.66){list.add(2);return R.raw.d;}
             if(0.66<=temp&&temp<1){list.add(3);return R.raw.e;}
         }
         if(FOUR==modeFlag){
-            float temp =random.nextFloat();
             if(0<=temp&&temp<0.25){list.add(1);return R.raw.c;}
             if(0.25<=temp&&temp<0.5){list.add(2);return R.raw.d;}
             if(0.5<=temp&&temp<0.75){list.add(3);return R.raw.e;}
             if(0.75<=temp&&temp<1){list.add(4);return R.raw.f;}
         }
         if(FIVE==modeFlag){
-            float temp =random.nextFloat();
             if(0<=temp&&temp<0.2){list.add(1);return R.raw.c;}
             if(0.2<=temp&&temp<0.4){list.add(2);return R.raw.d;}
             if(0.4<=temp&&temp<0.6){list.add(3);return R.raw.e;}
@@ -98,7 +97,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if(0.8<=temp&&temp<1){list.add(5);return R.raw.g;}
         }
         if(SIX==modeFlag){
-            float temp =random.nextFloat();
             if(0<=temp&&temp<0.15){list.add(1);return R.raw.c;}
             if(0.15<=temp&&temp<0.3){list.add(2);return R.raw.d;}
             if(0.3<=temp&&temp<0.45){list.add(3);return R.raw.e;}
@@ -107,7 +105,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if(0.75<=temp&&temp<1){list.add(6);return R.raw.a;}
         }
         if(SEVEN==modeFlag){
-            float temp =random.nextFloat();
             if(0<=temp&&temp<0.14){list.add(1);return R.raw.c;}
             if(0.14<=temp&&temp<0.28){list.add(2);return R.raw.d;}
             if(0.28<=temp&&temp<0.42){list.add(3);return R.raw.e;}
@@ -118,17 +115,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         if(EIGHT==modeFlag){
-            float temp =random.nextFloat();
             if(0<=temp&&temp<0.5){list.add(2);return R.raw.d;}
             if(0.5<=temp&&temp<1){list.add(3);return R.raw.e;}
         }
         if(NINE==modeFlag){
-            float temp =random.nextFloat();
             if(0<=temp&&temp<0.5){list.add(3);return R.raw.e;}
             if(0.5<=temp&&temp<1){list.add(4);return R.raw.f;}
         }
         if(TEN==modeFlag){
-            float temp =random.nextFloat();
             if(0<=temp&&temp<0.33){list.add(2);return R.raw.d;}
             if(0.33<=temp&&temp<0.66){list.add(3);return R.raw.e;}
             if(0.66<=temp&&temp<1){list.add(4);return R.raw.f;}
@@ -182,6 +176,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.stop:
                 loopFlag = false;
+                break;
+            case R.id.loop:
+                loopFlag = true;
+                mStart.performClick();
+                new Thread(){
+                    @Override
+                    public void run() {
+                        super.run();
+                        while(loopFlag){
+                            try {
+                                Thread.sleep(1000*(mCount+2));
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                            v.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    mStart.performClick();
+                                }
+                            });
+                        }
+                    }
+                }.start();
                 break;
 
         }
