@@ -25,7 +25,7 @@
         android:layout_height="50dp"
         android:layout_below="@+id/stop"
         android:numeric="integer"
-        android:text="5"
+        android:text="3"
         android:textAlignment="center"/>
     <Button
         android:id="@+id/set"
@@ -49,8 +49,10 @@
         android:id="@+id/tishiTv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/loop"
+        android:layout_marginTop="30dp"
         android:textAlignment="center"
-        android:textColor="@android:color/holo_red_light"  />
+        android:textColor="@android:color/holo_red_light"
+        android:textSize="30sp"  />
 
 </RelativeLayout>

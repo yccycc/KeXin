@@ -2,6 +2,7 @@ package com.yctech.kexin;
 
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -17,9 +18,10 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, TextToSpeech.OnInitListener {
     private static final int THREE = 3;
     private static final int FOUR = 4;
     private static final int FIVE = 5;
@@ -28,19 +30,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private static final int EIGHT = 8;
     private static final int NINE = 9;
     private static final int TEN = 10;
+    private static final int ELEVEN = 11;
     private Button mStart;
     private EditText mNumEt;
     private Button mSet;
     private TextView mTiShiTv;
-    private int mCount = 5;
+    private int mCount = 3;
     private MediaPlayer mediaPlayer;
     private Random random;
     private List<Integer> list;
     private int modeFlag = THREE;
     private TextView nowModeTv;
     private Button stopBtn;
-    private Boolean loopFlag =false;
+    private Boolean timesLoopFlag =false;
+    private Boolean clickLoopFlag =false;
     private Button loop;
+    private TextToSpeech tts;
+    private Boolean readFlag = false;
 
     private void assignViews() {
         mStart = (Button) findViewById(R.id.start);
@@ -74,6 +80,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         loop.setOnClickListener(this);
         random = new Random();
         nowModeTv.setText("CDE");
+        tts = new TextToSpeech(this,this);
     }
 
     private int getRandomRawId(){
@@ -127,6 +134,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if(0.33<=temp&&temp<0.66){list.add(3);return R.raw.e;}
             if(0.66<=temp&&temp<1){list.add(4);return R.raw.f;}
         }
+        if(ELEVEN==modeFlag){
+            if(0<=temp&&temp<0.5){list.add(1);return R.raw.c;}
+            if(0.5<=temp&&temp<1){list.add(2);return R.raw.d;}
+        }
         return R.raw.c;
     }
 
@@ -134,7 +145,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(final View v) {
         switch (v.getId()){
             case R.id.start:
-                loopFlag = true;
+                tts.stop();
+                timesLoopFlag = true;
                 v.setEnabled(false);
                 mTiShiTv.setText("");
                 new Thread(){
@@ -142,7 +154,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     public void run() {
                         super.run();
                         list = new ArrayList<>();
-                        for(int i=0 ;i < mCount&&loopFlag;i++){
+                        for(int i=0 ;i < mCount&&timesLoopFlag;i++){
                             mediaPlayer = MediaPlayer.create(MainActivity.this,getRandomRawId());
                             mediaPlayer.start();
                             try {
@@ -153,12 +165,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             if(null!=mediaPlayer){
                                 mediaPlayer.stop();
                                 mediaPlayer.release();
+                                mediaPlayer = null;
                             }
                         }
                         v.post(new Runnable() {
                             @Override
                             public void run() {
                                 mTiShiTv.setText(Arrays.toString(list.toArray()));
+                                if(readFlag){
+                                    tts.setSpeechRate(10);
+                                    tts.speak(Arrays.toString(list.toArray()), TextToSpeech.QUEUE_FLUSH, null);
+                                }
                             }
                         });
                         v.post(new Runnable() {
@@ -175,16 +192,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Toast.makeText(this,"set ok",Toast.LENGTH_SHORT).show();
                 break;
             case R.id.stop:
-                loopFlag = false;
+                timesLoopFlag = false;
+                clickLoopFlag = false;
+                loop.setEnabled(true);
+                if(null!=mediaPlayer){
+                    Toast.makeText(this,"wait a minute",Toast.LENGTH_SHORT).show();
+                }
                 break;
             case R.id.loop:
-                loopFlag = true;
+                loop.setEnabled(false);
+                clickLoopFlag = true;
                 mStart.performClick();
                 new Thread(){
                     @Override
                     public void run() {
                         super.run();
-                        while(loopFlag){
+                        while(clickLoopFlag){
                             try {
                                 Thread.sleep(1000*(mCount+2));
                             } catch (InterruptedException e) {
@@ -252,8 +275,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 modeFlag = TEN;
                 nowModeTv.setText("DEF");
                 break;
+            case R.id.cd:
+                Toast.makeText(this,"cd",Toast.LENGTH_SHORT).show();
+                modeFlag = ELEVEN;
+                nowModeTv.setText("CD");
+                break;
+            case R.id.read_on:
+                Toast.makeText(this,"read is on",Toast.LENGTH_SHORT).show();
+                readFlag = Boolean.TRUE;
+                break;
+            case R.id.read_off:
+                Toast.makeText(this,"read is off",Toast.LENGTH_SHORT).show();
+                readFlag = Boolean.FALSE;
+                break;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onInit(int status) {
+        int result = tts.setLanguage(Locale.CHINESE);
     }
 }

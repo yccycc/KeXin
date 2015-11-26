@@ -1,20 +1,26 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools" tools:context=".MainActivity">
-    <item android:id="@+id/cde" android:title="cde"
-        android:orderInCategory="100" app:showAsAction="never" />
-    <item android:id="@+id/cdef" android:title="cdef"
-        android:orderInCategory="100" app:showAsAction="never" />
-    <item android:id="@+id/cdefg" android:title="cdefg"
-        android:orderInCategory="100" app:showAsAction="never" />
-    <item android:id="@+id/cdefga" android:title="cdefga"
-        android:orderInCategory="100" app:showAsAction="never" />
-    <item android:id="@+id/cdefgab" android:title="cdefgab"
-        android:orderInCategory="100" app:showAsAction="never" />
-    <item android:id="@+id/de" android:title="de"
-        android:orderInCategory="100" app:showAsAction="never" />
-    <item android:id="@+id/ef" android:title="ef"
-        android:orderInCategory="100" app:showAsAction="never" />
-    <item android:id="@+id/def" android:title="def"
-        android:orderInCategory="100" app:showAsAction="never" />
+    <item android:id="@+id/cd" android:orderInCategory="100"
+        android:title="cd" app:showAsAction="never" />
+    <item android:id="@+id/de" android:orderInCategory="100"
+        android:title="de" app:showAsAction="never" />
+    <item android:id="@+id/ef" android:orderInCategory="100"
+        android:title="ef" app:showAsAction="never" />
+    <item android:id="@+id/cde" android:orderInCategory="100"
+        android:title="cde" app:showAsAction="never" />
+    <item android:id="@+id/def" android:orderInCategory="100"
+        android:title="def" app:showAsAction="never" />
+    <item android:id="@+id/cdef" android:orderInCategory="100"
+        android:title="cdef" app:showAsAction="never" />
+    <item android:id="@+id/cdefg" android:orderInCategory="100"
+        android:title="cdefg" app:showAsAction="never" />
+    <item android:id="@+id/cdefga" android:orderInCategory="100"
+        android:title="cdefga" app:showAsAction="never" />
+    <item android:id="@+id/cdefgab" android:orderInCategory="100"
+        android:title="cdefgab" app:showAsAction="never" />
+    <item android:id="@+id/read_on" android:orderInCategory="100"
+        android:title="read on" app:showAsAction="never" />
+    <item android:id="@+id/read_off" android:orderInCategory="100"
+        android:title="read off" app:showAsAction="never" />
 </menu>
