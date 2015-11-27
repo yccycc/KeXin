@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private static final int NINE = 9;
     private static final int TEN = 10;
     private static final int ELEVEN = 11;
+    private static final int TWELVE = 12;
     private Button mStart;
     private EditText mNumEt;
     private Button mSet;
@@ -69,7 +70,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Hello KeXin", Snackbar.LENGTH_SHORT)
+                Snackbar.make(view, "Hello Baby", Snackbar.LENGTH_SHORT)
                         .setAction("Action", null).show();
             }
         });
@@ -79,8 +80,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         stopBtn.setOnClickListener(this);
         loop.setOnClickListener(this);
         random = new Random();
-        nowModeTv.setText("CDE");
         tts = new TextToSpeech(this,this);
+        nowModeTv.setText("CDE");
     }
 
     private int getRandomRawId(){
@@ -137,6 +138,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if(ELEVEN==modeFlag){
             if(0<=temp&&temp<0.5){list.add(1);return R.raw.c;}
             if(0.5<=temp&&temp<1){list.add(2);return R.raw.d;}
+        }
+        if(TWELVE==modeFlag){
+            if(0<=temp&&temp<0.33){list.add(5);return R.raw.g;}
+            if(0.33<=temp&&temp<0.66){list.add(6);return R.raw.a;}
+            if(0.66<=temp&&temp<1){list.add(7);return R.raw.b;}
         }
         return R.raw.c;
     }
@@ -196,7 +202,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 clickLoopFlag = false;
                 loop.setEnabled(true);
                 if(null!=mediaPlayer){
-                    Toast.makeText(this,"wait a minute",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this,"wait a minute",Toast.LENGTH_LONG).show();
                 }
                 break;
             case R.id.loop:
@@ -287,6 +293,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.read_off:
                 Toast.makeText(this,"read is off",Toast.LENGTH_SHORT).show();
                 readFlag = Boolean.FALSE;
+                break;
+            case R.id.gab:
+                Toast.makeText(this,"gab",Toast.LENGTH_SHORT).show();
+                modeFlag = TWELVE;
+                nowModeTv.setText("GAB");
                 break;
         }
 

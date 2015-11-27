@@ -1,8 +1,9 @@
 <resources>
-    <string name="app_name">KeXin</string>
+    <string name="app_name">练耳神器</string>
     <string name="action_settings">设置</string>
     <string name="play">播放</string>
     <string name="confirm">确定</string>
     <string name="stop">停止</string>
-
+    <string name="read_on">朗读开</string>
+    <string name="read_off">朗读关</string>
 </resources>

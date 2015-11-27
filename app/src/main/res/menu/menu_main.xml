@@ -11,6 +11,8 @@
         android:title="cde" app:showAsAction="never" />
     <item android:id="@+id/def" android:orderInCategory="100"
         android:title="def" app:showAsAction="never" />
+    <item android:id="@+id/gab" android:orderInCategory="100"
+        android:title="gab" app:showAsAction="never" />
     <item android:id="@+id/cdef" android:orderInCategory="100"
         android:title="cdef" app:showAsAction="never" />
     <item android:id="@+id/cdefg" android:orderInCategory="100"
@@ -20,7 +22,7 @@
     <item android:id="@+id/cdefgab" android:orderInCategory="100"
         android:title="cdefgab" app:showAsAction="never" />
     <item android:id="@+id/read_on" android:orderInCategory="100"
-        android:title="read on" app:showAsAction="never" />
+        android:title="@string/read_on" app:showAsAction="always" />
     <item android:id="@+id/read_off" android:orderInCategory="100"
-        android:title="read off" app:showAsAction="never" />
+        android:title="@string/read_off" app:showAsAction="always" />
 </menu>
