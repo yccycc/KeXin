@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Hello Baby", Snackbar.LENGTH_SHORT)
+                Snackbar.make(view, "nice day", Snackbar.LENGTH_SHORT)
                         .setAction("Action", null).show();
             }
         });
@@ -148,6 +148,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
+    @SuppressWarnings( "deprecation" )
     public void onClick(final View v) {
         switch (v.getId()){
             case R.id.start:
@@ -222,7 +223,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             v.post(new Runnable() {
                                 @Override
                                 public void run() {
-                                    mStart.performClick();
+                                    if(clickLoopFlag){
+                                        mStart.performClick();
+                                    }
                                 }
                             });
                         }
