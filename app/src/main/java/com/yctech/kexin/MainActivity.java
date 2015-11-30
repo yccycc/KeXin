@@ -1,7 +1,9 @@
 package com.yctech.kexin;
 
+import android.app.Activity;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.PowerManager;
 import android.speech.tts.TextToSpeech;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -48,6 +50,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button loop;
     private TextToSpeech tts;
     private Boolean readFlag = false;
+    PowerManager powerManager;
+    PowerManager.WakeLock wakeLock;
 
     private void assignViews() {
         mStart = (Button) findViewById(R.id.start);
@@ -60,6 +64,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
+    @SuppressWarnings( "deprecation" )
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -81,7 +86,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         loop.setOnClickListener(this);
         random = new Random();
         tts = new TextToSpeech(this,this);
+        tts.setLanguage(Locale.CHINESE);
         nowModeTv.setText("CDE");
+        powerManager = (PowerManager) getSystemService(Activity.POWER_SERVICE);
+        wakeLock = powerManager.newWakeLock(PowerManager.FULL_WAKE_LOCK,"mylock");
     }
 
     private int getRandomRawId(){
@@ -199,6 +207,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Toast.makeText(this,"set ok",Toast.LENGTH_SHORT).show();
                 break;
             case R.id.stop:
+                wakeLock.release();
                 timesLoopFlag = false;
                 clickLoopFlag = false;
                 loop.setEnabled(true);
@@ -207,6 +216,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 break;
             case R.id.loop:
+                wakeLock.acquire();
                 loop.setEnabled(false);
                 clickLoopFlag = true;
                 mStart.performClick();
@@ -309,6 +319,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onInit(int status) {
-        int result = tts.setLanguage(Locale.CHINESE);
     }
 }
