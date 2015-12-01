@@ -45,13 +45,77 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private int modeFlag = THREE;
     private TextView nowModeTv;
     private Button stopBtn;
-    private Boolean timesLoopFlag =false;
-    private Boolean clickLoopFlag =false;
     private Button loop;
     private TextToSpeech tts;
     private Boolean readFlag = false;
     PowerManager powerManager;
     PowerManager.WakeLock wakeLock;
+    PlayThread playThread;
+    LoopThread loopThread;
+
+    private class LoopThread extends Thread{
+        @Override
+        public void run() {
+            super.run();
+            while(!Thread.interrupted()){
+                try {
+                    Thread.sleep(1000*(mCount+2));
+                } catch (InterruptedException e) {
+                    break;
+                }
+                MainActivity.this.getWindow().getDecorView().post(new Runnable() {
+                    @Override
+                    public void run() {
+                        mStart.performClick();
+                    }
+                });
+            }
+        }
+    }
+    private class PlayThread extends Thread{
+        @Override
+        @SuppressWarnings( "deprecation" )
+        public void run() {
+            super.run();
+            list = new ArrayList<>();
+            MainActivity.this.getWindow().getDecorView().post(new Runnable() {
+                @Override
+                public void run() {
+                    mTiShiTv.setText("next");
+                }
+            });
+            for(int i=0 ;i < mCount;i++){
+                mediaPlayer = MediaPlayer.create(MainActivity.this,getRandomRawId());
+                mediaPlayer.start();
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    break;
+                }
+                if(null!=mediaPlayer){
+                    mediaPlayer.stop();
+                    mediaPlayer.release();
+                    mediaPlayer = null;
+                }
+            }
+            MainActivity.this.getWindow().getDecorView().post(new Runnable() {
+                @Override
+                public void run() {
+                    mTiShiTv.setText(Arrays.toString(list.toArray()));
+                    if (readFlag) {
+                        tts.setSpeechRate(10);
+                        tts.speak(Arrays.toString(list.toArray()), TextToSpeech.QUEUE_FLUSH, null);
+                    }
+                }
+            });
+            MainActivity.this.getWindow().getDecorView().post(new Runnable() {
+                @Override
+                public void run() {
+                    mStart.setEnabled(true);
+                }
+            });
+        }
+    }
 
     private void assignViews() {
         mStart = (Button) findViewById(R.id.start);
@@ -90,6 +154,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         nowModeTv.setText("CDE");
         powerManager = (PowerManager) getSystemService(Activity.POWER_SERVICE);
         wakeLock = powerManager.newWakeLock(PowerManager.FULL_WAKE_LOCK,"mylock");
+        wakeLock.acquire();
     }
 
     private int getRandomRawId(){
@@ -161,86 +226,32 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (v.getId()){
             case R.id.start:
                 tts.stop();
-                timesLoopFlag = true;
                 v.setEnabled(false);
-                mTiShiTv.setText("");
-                new Thread(){
-                    @Override
-                    public void run() {
-                        super.run();
-                        list = new ArrayList<>();
-                        for(int i=0 ;i < mCount&&timesLoopFlag;i++){
-                            mediaPlayer = MediaPlayer.create(MainActivity.this,getRandomRawId());
-                            mediaPlayer.start();
-                            try {
-                                Thread.sleep(1000);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-                            if(null!=mediaPlayer){
-                                mediaPlayer.stop();
-                                mediaPlayer.release();
-                                mediaPlayer = null;
-                            }
-                        }
-                        v.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                mTiShiTv.setText(Arrays.toString(list.toArray()));
-                                if(readFlag){
-                                    tts.setSpeechRate(10);
-                                    tts.speak(Arrays.toString(list.toArray()), TextToSpeech.QUEUE_FLUSH, null);
-                                }
-                            }
-                        });
-                        v.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                v.setEnabled(true);
-                            }
-                        });
-                    }
-                }.start();
+                playThread = new PlayThread();
+                playThread.start();
                 break;
             case R.id.set:
                 mCount = Integer.parseInt(mNumEt.getText().toString());
                 Toast.makeText(this,"set ok",Toast.LENGTH_SHORT).show();
                 break;
             case R.id.stop:
-                wakeLock.release();
-                timesLoopFlag = false;
-                clickLoopFlag = false;
+                mStart.setEnabled(true);
+                if(null!=playThread){
+                    playThread.interrupt();
+                }
+                if(null!=loopThread){
+                    loopThread.interrupt();
+                }
                 loop.setEnabled(true);
                 if(null!=mediaPlayer){
                     Toast.makeText(this,"wait a minute",Toast.LENGTH_LONG).show();
                 }
                 break;
             case R.id.loop:
-                wakeLock.acquire();
                 loop.setEnabled(false);
-                clickLoopFlag = true;
                 mStart.performClick();
-                new Thread(){
-                    @Override
-                    public void run() {
-                        super.run();
-                        while(clickLoopFlag){
-                            try {
-                                Thread.sleep(1000*(mCount+2));
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-                            v.post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    if(clickLoopFlag){
-                                        mStart.performClick();
-                                    }
-                                }
-                            });
-                        }
-                    }
-                }.start();
+                loopThread = new LoopThread();
+                loopThread.start();
                 break;
 
         }
@@ -319,5 +330,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onInit(int status) {
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(wakeLock.isHeld()){
+            wakeLock.release();
+        }
     }
 }

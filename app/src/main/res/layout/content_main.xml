@@ -12,9 +12,12 @@
         android:id="@+id/start"
         android:layout_width="match_parent"
         android:layout_height="80dp"
+        android:background="@drawable/button"
         android:text="@string/play"/>
     <Button
         android:id="@+id/stop"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/button"
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:layout_below="@+id/start"
@@ -29,6 +32,7 @@
         android:textAlignment="center"/>
     <Button
         android:id="@+id/set"
+        android:background="@drawable/button"
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:layout_below="@+id/numEt"
@@ -41,6 +45,7 @@
         android:textAlignment="center" />
     <Button
         android:id="@+id/loop"
+        android:background="@drawable/button"
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:layout_below="@+id/now_mode"
