@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             super.run();
             while(!Thread.interrupted()){
                 try {
-                    Thread.sleep(1000*(mCount+2));
+                    Thread.sleep(1000*(readFlag? mCount+mCount/2 :mCount+2));
                 } catch (InterruptedException e) {
                     break;
                 }
