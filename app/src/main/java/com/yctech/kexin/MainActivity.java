@@ -13,7 +13,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,9 +34,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private static final int ELEVEN = 11;
     private static final int TWELVE = 12;
     private Button mStart;
-    private EditText mNumEt;
-    private Button mSet;
     private TextView mTiShiTv;
+
+    public int getmCount() {
+        return mCount;
+    }
+
+    public void setmCount(int mCount) {
+        this.mCount = mCount;
+    }
+
     private int mCount = 3;
     private MediaPlayer mediaPlayer;
     private Random random;
@@ -119,8 +125,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void assignViews() {
         mStart = (Button) findViewById(R.id.start);
-        mNumEt = (EditText) findViewById(R.id.numEt);
-        mSet = (Button) findViewById(R.id.set);
         mTiShiTv = (TextView) findViewById(R.id.tishiTv);
         nowModeTv = (TextView) findViewById(R.id.now_mode);
         stopBtn = (Button) findViewById(R.id.stop);
@@ -145,7 +149,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
         assignViews();
         mStart.setOnClickListener(this);
-        mSet.setOnClickListener(this);
         stopBtn.setOnClickListener(this);
         loop.setOnClickListener(this);
         random = new Random();
@@ -229,10 +232,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 v.setEnabled(false);
                 playThread = new PlayThread();
                 playThread.start();
-                break;
-            case R.id.set:
-                mCount = Integer.parseInt(mNumEt.getText().toString());
-                Toast.makeText(this,"set ok",Toast.LENGTH_SHORT).show();
                 break;
             case R.id.stop:
                 mStart.setEnabled(true);

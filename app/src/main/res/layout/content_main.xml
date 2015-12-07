@@ -23,26 +23,15 @@
         android:layout_height="80dp"
         android:layout_below="@+id/start"
         android:text="@string/stop" />
-    <EditText
-        android:id="@+id/numEt"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
+    <fragment class="com.yctech.kexin.PreferencesFragment"
         android:layout_below="@+id/stop"
-        android:numeric="integer"
-        android:text="3"
-        android:textAlignment="center"/>
-    <Button
-        android:id="@+id/set"
-        android:background="@drawable/button"
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:layout_below="@+id/numEt"
-        android:text="@string/confirm" />
+        android:id="@+id/preference_fragment"
+        android:layout_width="match_parent" android:layout_height="wrap_content" />
     <TextView
         android:id="@+id/now_mode"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/set"
+        android:layout_below="@+id/preference_fragment"
         android:textAlignment="center" />
     <Button
         android:id="@+id/loop"

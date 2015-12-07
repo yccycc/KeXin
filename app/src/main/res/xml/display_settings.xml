@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:title="www">
+    <com.yctech.kexin.NumSetListPreference
+        android:entries="@array/numset_entries_display"
+        android:entryValues="@array/num_values"
+        android:key="numset"
+        android:persistent="false"
+        android:layout="@layout/layout" />
+</PreferenceScreen>
