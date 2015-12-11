@@ -171,7 +171,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if(0<=temp&&temp<0.25){list.add(1);return R.raw.c;}
             if(0.25<=temp&&temp<0.5){list.add(2);return R.raw.d;}
             if(0.5<=temp&&temp<0.75){list.add(3);return R.raw.e;}
-            if(0.75<=temp&&temp<1){list.add(4);return R.raw.f;}
+            if(0.75<=temp&&temp<1){list.add(6);return R.raw.a;}
         }
         if(FIVE==modeFlag){
             if(0<=temp&&temp<0.2){list.add(1);return R.raw.c;}
@@ -269,10 +269,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 modeFlag = THREE;
                 nowModeTv.setText("CDE");
                 break;
-            case R.id.cdef:
-                Toast.makeText(this,"cdef",Toast.LENGTH_SHORT).show();
+            case R.id.cdea:
+                Toast.makeText(this,"cdea",Toast.LENGTH_SHORT).show();
                 modeFlag = FOUR;
-                nowModeTv.setText("CDEF");
+                nowModeTv.setText("CDEA");
                 break;
             case R.id.cdefg:
                 Toast.makeText(this,"cdefg",Toast.LENGTH_SHORT).show();

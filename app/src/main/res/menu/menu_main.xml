@@ -13,8 +13,8 @@
         android:title="def" app:showAsAction="never" />
     <item android:id="@+id/gab" android:orderInCategory="100"
         android:title="gab" app:showAsAction="never" />
-    <item android:id="@+id/cdef" android:orderInCategory="100"
-        android:title="cdef" app:showAsAction="never" />
+    <item android:id="@+id/cdea" android:orderInCategory="100"
+        android:title="cdea" app:showAsAction="never" />
     <item android:id="@+id/cdefg" android:orderInCategory="100"
         android:title="cdefg" app:showAsAction="never" />
     <item android:id="@+id/cdefga" android:orderInCategory="100"
