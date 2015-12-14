@@ -24,7 +24,7 @@ public class SplashActivity extends AppCompatActivity {
             packageInfo = packageManager.getPackageInfo("com.yctech.kexin",0);
             versionCode = packageInfo.versionCode;
             versionName = packageInfo.versionName;
-            showTv.setText("versionName:"+versionName);
+            showTv.setText("version:"+versionName);
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }

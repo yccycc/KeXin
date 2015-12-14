@@ -337,5 +337,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if(wakeLock.isHeld()){
             wakeLock.release();
         }
+        tts.shutdown();
+        tts.stop();
     }
 }
